@@ -97,7 +97,7 @@ RSpec.describe Xlog do
         context 'with custom file prefix' do
           let(:file_prefix) { 'custom_prefix' }
 
-          it 'logs message and tag' do
+          it 'logs message and tag to custom file' do
             Xlog.warn(message, tags: tag, file_prefix: file_prefix)
 
             expect(log_text).to be_blank
@@ -142,7 +142,7 @@ RSpec.describe Xlog do
         context 'with custom file prefix' do
           let(:file_prefix) { 'custom_prefix' }
 
-          it 'logs error and tag' do
+          it 'logs error and tag to custom file' do
             raise StandardError.new
           rescue StandardError => e
             Xlog.error(e, message: message, tags: [tag], file_prefix: file_prefix
@@ -153,7 +153,7 @@ RSpec.describe Xlog do
             expect(log_text(custom_file_path)).to include('[error]')
             expect(log_text(custom_file_path)).to include("[#{tag}]")
             expect(log_text(custom_file_path)).to include('Error backtrace')
-            expect(log_text(custom_file_path)).to include('xlog/spec/xlog_spec.rb') # double check?
+            expect(log_text(custom_file_path)).to include('xlog/spec/xlog_spec.rb')
           end
         end
       end
@@ -185,7 +185,7 @@ RSpec.describe Xlog do
         context 'with custom file prefix' do
           let(:file_prefix) { 'custom_prefix' }
 
-          it 'logs error and tag' do
+          it 'logs error and tag to custom file' do
             raise StandardError.new
           rescue StandardError => e
             expect { Xlog.and_raise_error(e, message: message, tags: tag, file_prefix: file_prefix) }.to raise_error StandardError
@@ -196,7 +196,7 @@ RSpec.describe Xlog do
             expect(log_text(custom_file_path)).to include('[error]')
             expect(log_text(custom_file_path)).to include("[#{tag}]")
             expect(log_text(custom_file_path)).to include('Error backtrace')
-            expect(log_text(custom_file_path)).to include('xlog/spec/xlog_spec.rb') # double check?
+            expect(log_text(custom_file_path)).to include('xlog/spec/xlog_spec.rb')
           end
         end
       end
