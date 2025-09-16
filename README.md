@@ -33,8 +33,8 @@ Xlog has awesome `.error` and `.and_raise_error` methods
 
 ```ruby
 def index
-  10 / 0  
-  @orders = Order.all  
+  10 / 0
+  @orders = Order.all
   rescue StandardError => e
     Xlog.and_raise_error(e, data: { params: params }, message: 'Some message text here')
 end
@@ -43,10 +43,10 @@ end
 ...and the output
 
 ```
-[2019-04-30 11:48:33 UTC] [Admin::OrdersController.index] [error] ZeroDivisionError: divided by 0. 
+[2019-04-30 11:48:33 UTC] [Admin::OrdersController.index] [error] ZeroDivisionError: divided by 0.
   | Message: Some message text here
-  | Data: {:params=><ActionController::Parameters {"controller"=>"admin/orders", "action"=>"index"} permitted: false>} 
-  | Error backtrace: 
+  | Data: {:params=><ActionController::Parameters {"controller"=>"admin/orders", "action"=>"index"} permitted: false>}
+  | Error backtrace:
   | /home/me/test_app/app/controllers/admin/orders_controller.rb:7:in `/'
   | /home/me/test_app/app/controllers/admin/orders_controller.rb:7:in `index'
 ```
@@ -87,7 +87,7 @@ Xlog.warn(error, tags: %w[fatal]) # [2019-04-30 12:29:13 UTC] [ArticlesControlle
 If you need a dedicated log file for a specific service (e.g., a webhooks handler), you can pass a `file_prefix` directly to the log method. The `file_prefix` takes the highest priority, even over any custom logger configuration
 
 ```ruby
-Xlog.warn('Almost expired API key', tags: 'wise', filename: 'webhooks') 
+Xlog.warn('Almost expired API key', tags: 'wise', file_prefix: 'webhooks')
 
 # log/xlog_webhooks_development.log
 [2025-01-01 12:29:13 UTC] [WebhooksController.process] [warn] [wise] Message: Almost expired API key
