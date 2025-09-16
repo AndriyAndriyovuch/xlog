@@ -1,4 +1,4 @@
-# Xlog v0.1.8 - [changelog](https://github.com/coaxsoft/xlog/blob/master/CHANGELOG.md)
+# Xlog v0.1.9 - [changelog](https://github.com/coaxsoft/xlog/blob/master/CHANGELOG.md)
 
 Xlog - awesome logger for your Rails app. Logs everything you need in well-formatted view with timestamp, caller path and tags.
 
@@ -6,6 +6,7 @@ Xlog - awesome logger for your Rails app. Logs everything you need in well-forma
 - 2.7.3
 - 3.0.0
 - 3.1.1
+- 3.2.3
 
 ## Usage
 
@@ -81,18 +82,15 @@ Xlog.warn('Validation failed', tags: %w[validation input_error]) # [2019-04-30 1
 Xlog.warn(error, tags: %w[fatal]) # [2019-04-30 12:29:13 UTC] [ArticlesController.update] [error] [fatal] Message: Zero division error
 ```
 
+### Custom file prefix
 
-### `.tag_logger` [DEPRECATED]
-
-```ruby
-Xlog.tag_logger('custom_tag')
-Xlog.info('Some text') # [2019-04-30 12:29:13 UTC] [ArtilesController.show] [info] [custom_tag] Message: Some info text
-```
-
-Clear tags with: [DEPRECATED]
+If you need a dedicated log file for a specific service (e.g., a webhooks handler), you can pass a `file_prefix` directly to the log method. The `file_prefix` takes the highest priority, even over any custom logger configuration
 
 ```ruby
-Xlog.clear_tags
+Xlog.warn('Almost expired API key', tags: 'wise', filename: 'webhooks') 
+
+# log/xlog_webhooks_development.log
+[2025-01-01 12:29:13 UTC] [WebhooksController.process] [warn] [wise] Message: Almost expired API key
 ```
 
 ## Middleware
